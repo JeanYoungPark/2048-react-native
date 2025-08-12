@@ -1,0 +1,120 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-error.log
+yarn.lock
+
+# React Native
+.expo/
+.expo-shared/
+
+# iOS
+ios/build/
+ios/Pods/
+ios/*.xcworkspace/xcuserdata/
+ios/*.xcodeproj/xcuserdata/
+ios/DerivedData/
+ios/*.ipa
+
+# Android
+android/build/
+android/app/build/
+android/.gradle/
+android/gradle.properties
+android/keystore.properties
+android/app/release/
+android/app/debug/
+*.apk
+
+# Metro
+.metro-health-check*
+.metro-cache/
+
+# Debug
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Bundle artifact
+*.jsbundle
+
+# CocoaPods
+ios/Podfile.lock
+
+# Flipper
+# Remove this if you use Flipper
+ios/Pods/Flipper*
+android/app/src/debug/
+
+# Generated files
+coverage/
+*.coverage
+.nyc_output
+
+# Jest
+coverage.*/
+
+# Additional React Native ignores
+*.hmap
+*.ipa
+.expo/
+.expo-shared/
+web-build/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Xcode
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
+
+# Android Studio
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.externalNativeBuild
+.cxx
+
+# CocoaPods
+ios/Podfile.lock
+ios/Pods/
+
+# Build outputs
+ios/build/
+android/build/
+android/app/build/
+
+# Metro bundler
+.metro-health-check*
