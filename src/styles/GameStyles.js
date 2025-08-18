@@ -310,6 +310,20 @@ export const styles = StyleSheet.create({
     opacity: 0.7,
   },
   
+  privacyLink: {
+    marginTop: SPACING.sm,
+    paddingVertical: SPACING.xs,
+    paddingHorizontal: SPACING.sm,
+  },
+  
+  privacyLinkText: {
+    fontSize: 11,
+    color: colors.textPrimary,
+    textAlign: 'center',
+    opacity: 0.6,
+    textDecorationLine: 'underline',
+  },
+  
   fixedAdContainer: {
     position: 'absolute',
     bottom: 0,
@@ -326,6 +340,117 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 5,
+  },
+
+  // 개인정보처리방침 화면 스타일
+  privacyContainer: {
+    flex: 1,
+    backgroundColor: colors.background,
+  },
+  
+  privacyHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: SPACING.lg,
+    paddingVertical: SPACING.md,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(187, 173, 160, 0.3)',
+    backgroundColor: colors.background,
+  },
+  
+  backButton: {
+    paddingVertical: SPACING.xs,
+    paddingHorizontal: SPACING.sm,
+    marginRight: SPACING.md,
+  },
+  
+  backButtonText: {
+    fontSize: 16,
+    color: colors.button,
+    fontWeight: '600',
+  },
+  
+  privacyTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: colors.textPrimary,
+  },
+  
+  privacyContent: {
+    flex: 1,
+  },
+  
+  privacySection: {
+    padding: SPACING.lg,
+  },
+  
+  privacyDate: {
+    fontSize: 12,
+    color: colors.textPrimary,
+    opacity: 0.7,
+    marginBottom: SPACING.xs,
+  },
+  
+  privacyIntro: {
+    fontSize: 14,
+    color: colors.textPrimary,
+    lineHeight: 20,
+    marginTop: SPACING.md,
+    marginBottom: SPACING.lg,
+  },
+  
+  privacySectionBlock: {
+    marginBottom: SPACING.lg,
+  },
+  
+  privacySectionTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: colors.textPrimary,
+    marginBottom: SPACING.sm,
+  },
+  
+  privacySubTitle: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: colors.textPrimary,
+    marginTop: SPACING.sm,
+    marginBottom: SPACING.xs,
+  },
+  
+  privacyText: {
+    fontSize: 13,
+    color: colors.textPrimary,
+    lineHeight: 18,
+    marginBottom: SPACING.xs,
+  },
+  
+  privacyListItem: {
+    fontSize: 13,
+    color: colors.textPrimary,
+    lineHeight: 18,
+    marginBottom: SPACING.xs,
+    marginLeft: SPACING.sm,
+  },
+  
+  privacyListSubItem: {
+    fontSize: 12,
+    color: colors.textPrimary,
+    lineHeight: 16,
+    marginBottom: SPACING.xs,
+    marginLeft: SPACING.lg,
+    opacity: 0.8,
+  },
+  
+  privacyFooter: {
+    fontSize: 13,
+    color: colors.textPrimary,
+    fontWeight: '600',
+    textAlign: 'center',
+    marginTop: SPACING.lg,
+    padding: SPACING.md,
+    backgroundColor: 'rgba(187, 173, 160, 0.1)',
+    borderRadius: 8,
   },
   
 });

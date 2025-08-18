@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   ScrollView,
   PanResponder,
   SafeAreaView,
+  Modal,
 } from 'react-native';
 import mobileAds from 'react-native-google-mobile-ads';
 import { useGame } from '../hooks/useGame';
@@ -30,6 +31,9 @@ const Game2048 = () => {
   
   // 전면광고 훅 사용
   const { showAdWithProbability } = useInterstitialAd();
+  
+  // 개인정보처리방침 모달 상태
+  const [privacyModalVisible, setPrivacyModalVisible] = useState(false);
 
   // AdMob 초기화
   useEffect(() => {
@@ -62,6 +66,16 @@ const Game2048 = () => {
       // 에러 발생 시 바로 재시작
       restart();
     }
+  };
+
+  // 개인정보처리방침 모달 열기
+  const openPrivacyPolicy = () => {
+    setPrivacyModalVisible(true);
+  };
+
+  // 개인정보처리방침 모달 닫기
+  const closePrivacyPolicy = () => {
+    setPrivacyModalVisible(false);
   };
 
   // Gesture handling for swipes
@@ -221,6 +235,12 @@ const Game2048 = () => {
           <Text style={styles.instructionsText}>
 방법: 스와이프로 타일을 이동하세요.{'\n'}두 개의 같은 숫자 타일이 만나면 하나로 합쳐집니다!
           </Text>
+          <TouchableOpacity 
+            style={styles.privacyLink}
+            onPress={openPrivacyPolicy}
+            activeOpacity={0.7}>
+            <Text style={styles.privacyLinkText}>개인정보처리방침</Text>
+          </TouchableOpacity>
         </View>
         
         
@@ -232,6 +252,51 @@ const Game2048 = () => {
       <View style={styles.fixedAdContainer}>
         <AdBanner />
       </View>
+      
+      {/* 개인정보처리방침 모달 */}
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={privacyModalVisible}
+        onRequestClose={closePrivacyPolicy}>
+        <SafeAreaView style={styles.privacyContainer}>
+          <View style={styles.privacyHeader}>
+            <TouchableOpacity 
+              style={styles.backButton}
+              onPress={closePrivacyPolicy}
+              activeOpacity={0.7}>
+              <Text style={styles.backButtonText}>← 뒤로</Text>
+            </TouchableOpacity>
+            <Text style={styles.privacyTitle}>개인정보처리방침</Text>
+          </View>
+
+          <ScrollView 
+            style={styles.privacyContent}
+            showsVerticalScrollIndicator={true}
+            bounces={true}
+            scrollEnabled={true}>
+            <View style={styles.privacySection}>
+              <Text style={styles.privacyIntro}>
+                본 앱은 Google AdMob을 통해 광고를 제공합니다.
+              </Text>
+
+              <View style={styles.privacySectionBlock}>
+                <Text style={styles.privacySectionTitle}>수집하는 정보</Text>
+                <Text style={styles.privacyListItem}>• 게임 점수 (기기에만 저장)</Text>
+                <Text style={styles.privacyListItem}>• 광고 관련 정보 (Google AdMob)</Text>
+              </View>
+
+              <View style={styles.privacySectionBlock}>
+                <Text style={styles.privacySectionTitle}>광고 설정</Text>
+                <Text style={styles.privacyListItem}>• Android: 설정 > Google > 광고</Text>
+                <Text style={styles.privacyListItem}>• iOS: 설정 > 개인정보 보호 > Apple 광고</Text>
+              </View>
+
+
+            </View>
+          </ScrollView>
+        </SafeAreaView>
+      </Modal>
     </SafeAreaView>
   );
 };
