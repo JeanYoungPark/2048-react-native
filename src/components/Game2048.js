@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import mobileAds from 'react-native-google-mobile-ads';
 import { useGame } from '../hooks/useGame';
+import useInterstitialAd from '../hooks/useInterstitialAd';
 import TileComponent from './TileComponent';
 import AdBanner from './AdBanner';
 import { styles } from '../styles/GameStyles';
@@ -26,6 +27,9 @@ const Game2048 = () => {
     continueGame,
     isGameTerminated,
   } = useGame();
+  
+  // 전면광고 훅 사용
+  const { showAdWithProbability } = useInterstitialAd();
 
   // AdMob 초기화
   useEffect(() => {
@@ -39,9 +43,25 @@ const Game2048 = () => {
       });
   }, []);
 
-  // 단순한 재시작 함수
-  const handleRestart = () => {
-    restart();
+  // 랜덤 전면광고와 함께 재시작
+  const handleRestart = async () => {
+    try {
+      // 40% 확률로 전면광고 표시
+      const adResult = await showAdWithProbability(0.4);
+      
+      if (adResult.shown) {
+        // 광고 표시 완료 후 게임 재시작
+        setTimeout(() => {
+          restart();
+        }, 500);
+      } else {
+        // 광고 미표시 시 바로 재시작
+        restart();
+      }
+    } catch (error) {
+      // 에러 발생 시 바로 재시작
+      restart();
+    }
   };
 
   // Gesture handling for swipes

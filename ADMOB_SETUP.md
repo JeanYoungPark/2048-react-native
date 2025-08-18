@@ -64,14 +64,17 @@ cd ios && pod install && cd ..
 ## 📱 현재 구현된 기능
 
 ### 배너 광고
-- **위치**: 게임 하단, 인스트럭션 아래
+- **위치**: 화면 하단 고정 영역
 - **크기**: 320x50 (표준 배너)
-- **표시 조건**: 광고 시스템 초기화 완료 시 자동 표시
+- **표시 조건**: 앱 실행 시 자동 표시, 화면 하단에 항상 고정
+- **컴포넌트**: `src/components/AdBanner.js`
 
 ### 전면 광고 (Interstitial)
-- **게임 오버 시**: 자동 표시 (1초 지연)
-- **재시작 버튼**: 간헐적 표시 (최소 1분 간격)
-- **표시 조건**: 게임 상황과 시간 간격 고려
+- **새 게임 버튼**: 40% 랜덤 확률로 표시
+- **게임 오버 재시작**: 40% 랜덤 확률로 표시  
+- **스마트 로직**: 광고 로드 실패 시 게임 정상 진행
+- **사용자 경험**: 과도하지 않은 광고 빈도
+- **훅**: `src/hooks/useInterstitialAd.js`
 
 ### 보상형 광고 (향후 확장 가능)
 - **추가 이동 기회**: 3회 이동
@@ -83,11 +86,13 @@ cd ios && pod install && cd ..
 현재 모든 광고는 **테스트 ID**를 사용합니다:
 
 ```javascript
-// 개발용 테스트 ID들
+// 개발용 테스트 ID들 (자동 사용됨)
+import { TestIds } from 'react-native-google-mobile-ads';
+
 const AD_UNIT_IDS = {
-  banner: 'ca-app-pub-3940256099942544/6300978111',      // 안드로이드
-  interstitial: 'ca-app-pub-3940256099942544/1033173712', // 안드로이드
-  rewarded: 'ca-app-pub-3940256099942544/5224354917',     // 안드로이드
+  banner: TestIds.BANNER,           // 테스트 배너 ID
+  interstitial: TestIds.INTERSTITIAL, // 테스트 전면 ID
+  rewarded: TestIds.REWARDED,       // 테스트 보상형 ID
 };
 ```
 
@@ -101,23 +106,26 @@ const AD_UNIT_IDS = {
 
 ### 2. 실제 광고 ID로 교체
 
-`src/ads/AdConfig.js` 파일의 ID들을 실제 광고 ID로 교체:
+다음 파일들에서 광고 ID를 실제 ID로 교체:
 
+**`src/components/AdBanner.js`**:
 ```javascript
-export const ADMOB_CONFIG = {
-  appId: Platform.select({
-    ios: 'ca-app-pub-XXXXXXXXXXXXXXXX~YYYYYYYYYY', // 실제 iOS 앱 ID
-    android: 'ca-app-pub-XXXXXXXXXXXXXXXX~YYYYYYYYYY', // 실제 Android 앱 ID
-  }),
-};
+const adUnitId = __DEV__ 
+  ? TestIds.BANNER 
+  : Platform.select({
+      ios: 'ca-app-pub-2131681508611108/실제iOS배너ID',
+      android: 'ca-app-pub-2131681508611108/실제Android배너ID',
+    });
+```
 
-export const AD_UNIT_IDS = {
-  banner: Platform.select({
-    ios: 'ca-app-pub-XXXXXXXXXXXXXXXX/YYYYYYYYYY', // 실제 iOS 배너 ID
-    android: 'ca-app-pub-XXXXXXXXXXXXXXXX/YYYYYYYYYY', // 실제 Android 배너 ID
-  }),
-  // ... 다른 광고 단위들
-};
+**`src/hooks/useInterstitialAd.js`**:
+```javascript
+const adUnitId = __DEV__ 
+  ? TestIds.INTERSTITIAL 
+  : Platform.select({
+      ios: 'ca-app-pub-2131681508611108/실제iOS전면ID',
+      android: 'ca-app-pub-2131681508611108/실제Android전면ID',
+    });
 ```
 
 ### 3. AndroidManifest.xml과 Info.plist의 앱 ID도 실제 ID로 교체
@@ -160,14 +168,15 @@ cd android && ./gradlew clean
 ## 📊 수익 추적
 
 현재 구현된 수익 추적 기능:
-- 광고 시청 횟수 기록
-- 광고 유형별 통계
-- AsyncStorage를 통한 로컬 저장
+- 전면광고 40% 랜덤 확률 표시
+- 배너광고 화면 하단 고정 표시
+- 광고 로드 실패 시 자동 fallback
 
 향후 확장 가능:
 - Firebase Analytics 연동
+- 광고 시청 횟수 통계
 - 실시간 수익 대시보드
-- A/B 테스트 시스템
+- A/B 테스트 시스템 (광고 확률 조정)
 
 ## 🔒 개인정보 보호
 
