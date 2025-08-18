@@ -1,10 +1,22 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
-const { width: screenWidth } = Dimensions.get('window');
-const gameSize = Math.min(screenWidth * 0.9, 360);
-const gridPadding = 15;
-const cellGap = 15;
-// 정확한 계산: (전체크기 - 패딩*2 - 간격*3) / 4개 셀
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+
+// 디자인 상수정리
+const SPACING = {
+  xs: 8,
+  sm: 12,
+  md: 16,
+  lg: 20,
+  xl: 24,
+  xxl: 32,
+};
+
+// 게임 보드 크기 최적화
+const availableHeight = screenHeight - 200; // 헤더 + 광고 영역 제외
+const gameSize = Math.min(screenWidth * 0.85, availableHeight * 0.6, 320);
+const gridPadding = SPACING.md;
+const cellGap = SPACING.sm;
 const cellSize = (gameSize - gridPadding * 2 - cellGap * 3) / 4;
 
 export const colors = {
@@ -55,39 +67,59 @@ export const getTilePosition = (x, y) => {
 };
 
 export const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: colors.background,
+  },
+  
   container: {
     flex: 1,
     backgroundColor: colors.background,
-    paddingHorizontal: 20,
-    paddingTop: 60,
-    paddingBottom: 30,
   },
+  
   
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 30,
+    paddingHorizontal: SPACING.lg,
+    paddingTop: SPACING.xxl,
+    paddingBottom: SPACING.lg,
+    backgroundColor: colors.background,
+  },
+  
+  gameArea: {
+    flex: 1,
+    paddingHorizontal: SPACING.lg,
+    paddingBottom: 90, // 하단 광고 영역 확보
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   
   title: {
-    fontSize: 48,
-    fontWeight: 'bold',
+    fontSize: 52,
+    fontWeight: '800',
     color: colors.textPrimary,
+    letterSpacing: -1,
   },
   
   scoreContainer: {
     flexDirection: 'row',
-    gap: 10,
+    gap: SPACING.sm,
   },
   
   scoreBox: {
     backgroundColor: colors.gridBackground,
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 6,
-    minWidth: 70,
+    paddingHorizontal: SPACING.md,
+    paddingVertical: SPACING.sm,
+    borderRadius: 8,
+    minWidth: 75,
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   
   scoreLabel: {
@@ -106,22 +138,29 @@ export const styles = StyleSheet.create({
   
   intro: {
     alignItems: 'center',
-    marginBottom: 30,
+    marginBottom: SPACING.xl,
+    paddingHorizontal: SPACING.md,
   },
   
   introText: {
-    fontSize: 16,
+    fontSize: 15,
     color: colors.textPrimary,
     textAlign: 'center',
-    marginBottom: 15,
-    lineHeight: 22,
+    marginBottom: SPACING.md,
+    lineHeight: 20,
+    opacity: 0.8,
   },
   
   button: {
     backgroundColor: colors.button,
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 6,
+    paddingHorizontal: SPACING.xl,
+    paddingVertical: SPACING.md,
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    elevation: 3,
   },
   
   buttonText: {
@@ -132,16 +171,21 @@ export const styles = StyleSheet.create({
   
   gameContainer: {
     alignItems: 'center',
-    marginBottom: 30,
+    marginBottom: SPACING.lg,
   },
   
   gridContainer: {
     backgroundColor: colors.gridBackground,
-    borderRadius: 10,
+    borderRadius: 12,
     padding: gridPadding,
     width: gameSize,
     height: gameSize,
     position: 'relative',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 4,
   },
   
   gridRow: {
@@ -153,7 +197,7 @@ export const styles = StyleSheet.create({
     width: cellSize,
     height: cellSize,
     backgroundColor: colors.cellBackground,
-    borderRadius: 6,
+    borderRadius: 8,
     marginRight: cellGap,
   },
   
@@ -253,13 +297,35 @@ export const styles = StyleSheet.create({
   
   instructions: {
     alignItems: 'center',
-    marginTop: 'auto',
+    marginTop: SPACING.lg,
+    marginBottom: SPACING.md,
+    paddingHorizontal: SPACING.lg,
   },
   
   instructionsText: {
-    fontSize: 14,
+    fontSize: 13,
     color: colors.textPrimary,
     textAlign: 'center',
-    lineHeight: 20,
+    lineHeight: 18,
+    opacity: 0.7,
   },
+  
+  fixedAdContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: colors.background,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(187, 173, 160, 0.3)',
+    paddingVertical: SPACING.xs,
+    paddingHorizontal: SPACING.md,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  
 });

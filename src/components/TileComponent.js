@@ -3,21 +3,12 @@ import { View, Text, Animated } from 'react-native';
 import { styles, getTileColor, getTilePosition } from '../styles/GameStyles';
 
 const TileComponent = ({ tile }) => {
-  // Validate tile object
-  if (!tile || typeof tile !== 'object') {
-    return null;
-  }
+  if (!tile) return null;
 
   const scaleAnim = useRef(new Animated.Value(tile.mergedFrom ? 1 : 0)).current;
   
-  // Safe initialization with fallback
-  const initialPosition = getTilePosition(tile.x || 0, tile.y || 0);
-  const positionAnim = useRef(
-    new Animated.ValueXY({
-      x: typeof initialPosition.x === 'number' ? initialPosition.x : 0,
-      y: typeof initialPosition.y === 'number' ? initialPosition.y : 0
-    })
-  ).current;
+  const initialPosition = getTilePosition(tile.x, tile.y);
+  const positionAnim = useRef(new Animated.ValueXY(initialPosition)).current;
 
   useEffect(() => {
     // Animate tile appearance for new tiles
@@ -31,17 +22,12 @@ const TileComponent = ({ tile }) => {
     }
 
     // Animate tile movement
-    const newPosition = getTilePosition(tile.x || 0, tile.y || 0);
-    if (newPosition && typeof newPosition === 'object') {
-      Animated.timing(positionAnim, {
-        toValue: {
-          x: typeof newPosition.x === 'number' ? newPosition.x : 0,
-          y: typeof newPosition.y === 'number' ? newPosition.y : 0
-        },
-        duration: 150,
-        useNativeDriver: true,
-      }).start();
-    }
+    const newPosition = getTilePosition(tile.x, tile.y);
+    Animated.timing(positionAnim, {
+      toValue: newPosition,
+      duration: 150,
+      useNativeDriver: true,
+    }).start();
   }, [tile.x, tile.y, scaleAnim, positionAnim]);
 
   // Animate merge effect
@@ -90,7 +76,9 @@ const TileComponent = ({ tile }) => {
           ],
         },
       ]}>
-      <Text style={[textStyle, { color: textColor }]}>{tile.value}</Text>
+      <Text style={[textStyle, { color: textColor }]}>
+        {tile.value}
+      </Text>
     </Animated.View>
   );
 };

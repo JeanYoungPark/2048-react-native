@@ -1,4 +1,4 @@
-package com.game2048native
+package com.games.puzzle2048
 
 import android.app.Application
 import com.facebook.react.PackageList

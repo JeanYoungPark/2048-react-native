@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Game 2048 Colors -->
+    <color name="splash_background_color">#faf8ef</color>
+    <color name="splash_text_color">#776e65</color>
+    <color name="game_gold">#edc22e</color>
+</resources>

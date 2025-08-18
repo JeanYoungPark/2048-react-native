@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window = UIWindow(frame: UIScreen.main.bounds)
 
     factory.startReactNative(
-      withModuleName: "Game2048Native",
+      withModuleName: "Game2048",
       in: window,
       launchOptions: launchOptions
     )

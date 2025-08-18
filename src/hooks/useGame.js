@@ -145,7 +145,7 @@ export const useGame = () => {
 
   // Get all tiles for rendering
   const getTiles = useCallback(() => {
-    if (!grid) return [];
+    if (!grid || !grid.eachCell) return [];
     
     const tiles = [];
     grid.eachCell((x, y, tile) => {
