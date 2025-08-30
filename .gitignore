@@ -50,6 +50,9 @@ Thumbs.db
 .env.test.local
 .env.production.local
 
+# iOS Environment-specific files (should be auto-generated)
+ios/.xcode.env.local
+
 # Bundle artifact
 *.jsbundle
 
