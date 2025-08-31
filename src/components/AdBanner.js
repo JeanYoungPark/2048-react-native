@@ -10,8 +10,8 @@ const AdBanner = ({ style }) => {
   const adUnitId = __DEV__ 
     ? TestIds.BANNER 
     : Platform.select({
-        ios: 'ca-app-pub-2131681508611108/8311998421', // iOS 배너 광고 ID
-        android: 'ca-app-pub-2131681508611108/3829504657', // Android 배너 광고 ID
+        ios: 'ca-app-pub-2131681508611108/5815588322', // iOS 배너 광고 ID
+        android: 'ca-app-pub-2131681508611108/5815588322', // Android 배너 광고 ID
       });
 
   const handleAdLoaded = () => {

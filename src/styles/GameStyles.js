@@ -1,15 +1,33 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, PixelRatio } from 'react-native';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
-// 디자인 상수정리
+// 화면 밀도 기반 스케일링
+const pixelDensity = PixelRatio.get();
+const fontScale = PixelRatio.getFontScale();
+
+// 디바이스별 반응형 스케일링
+const getResponsiveSize = (size) => {
+  const baseWidth = 375; // iPhone X 기준
+  const scale = screenWidth / baseWidth;
+  return Math.round(size * scale * 0.85); // Galaxy S10e 최적화를 위해 0.85 적용
+};
+
+// 반응형 폰트 크기
+const getResponsiveFontSize = (size) => {
+  const baseSize = size;
+  const scaleFactor = Math.min(screenWidth / 375, 1.2); // 최대 1.2배로 제한
+  return Math.round(baseSize * scaleFactor * 0.9); // Galaxy S10e 최적화
+};
+
+// 디자인 상수정리 - 반응형 적용
 const SPACING = {
-  xs: 8,
-  sm: 12,
-  md: 16,
-  lg: 20,
-  xl: 24,
-  xxl: 32,
+  xs: getResponsiveSize(6),
+  sm: getResponsiveSize(8),
+  md: getResponsiveSize(12),
+  lg: getResponsiveSize(16),
+  xl: getResponsiveSize(20),
+  xxl: getResponsiveSize(24),
 };
 
 // 게임 보드 크기 최적화
@@ -97,7 +115,7 @@ export const styles = StyleSheet.create({
   },
   
   title: {
-    fontSize: 52,
+    fontSize: getResponsiveFontSize(42),
     fontWeight: '800',
     color: colors.textPrimary,
     letterSpacing: -1,
@@ -123,7 +141,7 @@ export const styles = StyleSheet.create({
   },
   
   scoreLabel: {
-    fontSize: 12,
+    fontSize: getResponsiveFontSize(10),
     color: colors.textSecondary,
     fontWeight: '600',
     textTransform: 'uppercase',
@@ -131,7 +149,7 @@ export const styles = StyleSheet.create({
   },
   
   scoreValue: {
-    fontSize: 18,
+    fontSize: getResponsiveFontSize(14),
     color: colors.textSecondary,
     fontWeight: 'bold',
   },
@@ -143,11 +161,11 @@ export const styles = StyleSheet.create({
   },
   
   introText: {
-    fontSize: 15,
+    fontSize: getResponsiveFontSize(13),
     color: colors.textPrimary,
     textAlign: 'center',
     marginBottom: SPACING.md,
-    lineHeight: 20,
+    lineHeight: getResponsiveFontSize(17),
     opacity: 0.8,
   },
   
@@ -165,7 +183,7 @@ export const styles = StyleSheet.create({
   
   buttonText: {
     color: colors.textSecondary,
-    fontSize: 16,
+    fontSize: getResponsiveFontSize(14),
     fontWeight: 'bold',
   },
   
@@ -229,7 +247,7 @@ export const styles = StyleSheet.create({
   },
   
   tileText: {
-    fontSize: 28,
+    fontSize: getResponsiveFontSize(22),
     fontWeight: 'bold',
     color: colors.textPrimary,
   },
@@ -239,11 +257,11 @@ export const styles = StyleSheet.create({
   },
   
   tileTextSmall: {
-    fontSize: 22,
+    fontSize: getResponsiveFontSize(18),
   },
   
   tileTextXSmall: {
-    fontSize: 18,
+    fontSize: getResponsiveFontSize(14),
   },
   
   overlay: {
@@ -252,31 +270,48 @@ export const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 100,
+    zIndex: 9999,
+    elevation: 100,
+    // 강제 터치 이벤트 허용
+    pointerEvents: 'auto',
   },
   
   overlayText: {
-    fontSize: 32,
+    fontSize: getResponsiveFontSize(24), // 고정 크기로 변경하여 안정성 확보
     fontWeight: 'bold',
     color: colors.textPrimary,
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: SPACING.lg,
   },
   
   overlayButtons: {
     flexDirection: 'row',
-    gap: 10,
+    gap: SPACING.md,
+    pointerEvents: 'auto',
   },
   
   overlayButton: {
     backgroundColor: colors.button,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingHorizontal: SPACING.lg,
+    paddingVertical: SPACING.md,
     borderRadius: 6,
+    minWidth: 100,
+    minHeight: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // 터치 영역 확장
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 50,
+    zIndex: 10000,
+    // 강제 터치 이벤트 허용
+    pointerEvents: 'auto',
   },
   
   overlayButtonSecondary: {
@@ -287,8 +322,9 @@ export const styles = StyleSheet.create({
   
   overlayButtonText: {
     color: colors.textSecondary,
-    fontSize: 14,
+    fontSize: getResponsiveFontSize(12),
     fontWeight: 'bold',
+    textAlign: 'center',
   },
   
   overlayButtonTextSecondary: {
@@ -303,10 +339,10 @@ export const styles = StyleSheet.create({
   },
   
   instructionsText: {
-    fontSize: 13,
+    fontSize: getResponsiveFontSize(11),
     color: colors.textPrimary,
     textAlign: 'center',
-    lineHeight: 18,
+    lineHeight: getResponsiveFontSize(15),
     opacity: 0.7,
   },
   
@@ -317,7 +353,7 @@ export const styles = StyleSheet.create({
   },
   
   privacyLinkText: {
-    fontSize: 11,
+    fontSize: getResponsiveFontSize(9),
     color: colors.textPrimary,
     textAlign: 'center',
     opacity: 0.6,
@@ -351,27 +387,31 @@ export const styles = StyleSheet.create({
   privacyHeader: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     paddingHorizontal: SPACING.lg,
     paddingVertical: SPACING.md,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(187, 173, 160, 0.3)',
     backgroundColor: colors.background,
+    position: 'relative',
   },
   
   backButton: {
     paddingVertical: SPACING.xs,
     paddingHorizontal: SPACING.sm,
-    marginRight: SPACING.md,
+    position: 'absolute',
+    left: SPACING.lg,
+    zIndex: 1,
   },
   
   backButtonText: {
-    fontSize: 16,
+    fontSize: getResponsiveFontSize(14),
     color: colors.button,
     fontWeight: '600',
   },
   
   privacyTitle: {
-    fontSize: 20,
+    fontSize: getResponsiveFontSize(18),
     fontWeight: 'bold',
     color: colors.textPrimary,
   },
@@ -385,16 +425,16 @@ export const styles = StyleSheet.create({
   },
   
   privacyDate: {
-    fontSize: 12,
+    fontSize: getResponsiveFontSize(10),
     color: colors.textPrimary,
     opacity: 0.7,
     marginBottom: SPACING.xs,
   },
   
   privacyIntro: {
-    fontSize: 14,
+    fontSize: getResponsiveFontSize(12),
     color: colors.textPrimary,
-    lineHeight: 20,
+    lineHeight: getResponsiveFontSize(16),
     marginTop: SPACING.md,
     marginBottom: SPACING.lg,
   },
@@ -404,14 +444,14 @@ export const styles = StyleSheet.create({
   },
   
   privacySectionTitle: {
-    fontSize: 16,
+    fontSize: getResponsiveFontSize(14),
     fontWeight: 'bold',
     color: colors.textPrimary,
     marginBottom: SPACING.sm,
   },
   
   privacySubTitle: {
-    fontSize: 14,
+    fontSize: getResponsiveFontSize(12),
     fontWeight: '600',
     color: colors.textPrimary,
     marginTop: SPACING.sm,
@@ -419,31 +459,31 @@ export const styles = StyleSheet.create({
   },
   
   privacyText: {
-    fontSize: 13,
+    fontSize: getResponsiveFontSize(11),
     color: colors.textPrimary,
-    lineHeight: 18,
+    lineHeight: getResponsiveFontSize(15),
     marginBottom: SPACING.xs,
   },
   
   privacyListItem: {
-    fontSize: 13,
+    fontSize: getResponsiveFontSize(11),
     color: colors.textPrimary,
-    lineHeight: 18,
+    lineHeight: getResponsiveFontSize(15),
     marginBottom: SPACING.xs,
     marginLeft: SPACING.sm,
   },
   
   privacyListSubItem: {
-    fontSize: 12,
+    fontSize: getResponsiveFontSize(10),
     color: colors.textPrimary,
-    lineHeight: 16,
+    lineHeight: getResponsiveFontSize(13),
     marginBottom: SPACING.xs,
     marginLeft: SPACING.lg,
     opacity: 0.8,
   },
   
   privacyFooter: {
-    fontSize: 13,
+    fontSize: getResponsiveFontSize(11),
     color: colors.textPrimary,
     fontWeight: '600',
     textAlign: 'center',

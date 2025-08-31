@@ -11,8 +11,8 @@ const useInterstitialAd = () => {
   const adUnitId = __DEV__ 
     ? TestIds.INTERSTITIAL 
     : Platform.select({
-        ios: 'ca-app-pub-2131681508611108/iOS전면광고ID', // 실제 ID로 교체 필요
-        android: 'ca-app-pub-2131681508611108/Android전면광고ID', // 실제 ID로 교체 필요
+        ios: 'ca-app-pub-2131681508611108/9044386890', // iOS 전면 광고 ID
+        android: 'ca-app-pub-2131681508611108/9044386890', // Android 전면 광고 ID
       });
 
   // 전면광고 인스턴스 생성
