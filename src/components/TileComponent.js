@@ -76,7 +76,7 @@ const TileComponent = ({ tile }) => {
           ],
         },
       ]}>
-      <Text style={[textStyle, { color: textColor }]}>
+      <Text style={[textStyle, { color: textColor }]} allowFontScaling={false}>
         {tile.value}
       </Text>
     </Animated.View>

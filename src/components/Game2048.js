@@ -8,7 +8,7 @@ import AdBanner from "./AdBanner";
 import { styles } from "../styles/GameStyles";
 
 const Game2048 = () => {
-    const { score, bestScore, won, over, keepPlaying, tiles, move, restart, continueGame, isGameTerminated } = useGame();
+    const { score, bestScore, won, over, keepPlaying, tiles, move, restart, isGameTerminated } = useGame();
 
     // 전면광고 훅 사용
     const { showAdWithProbability } = useInterstitialAd();
@@ -150,22 +150,16 @@ const Game2048 = () => {
 
         return (
             <View style={styles.overlay}>
-                <Text style={styles.overlayText}>{messageText}</Text>
+                <Text style={styles.overlayText} allowFontScaling={false}>{messageText}</Text>
                 {shouldShowButton && (
                     <View style={styles.overlayButtons}>
                         <TouchableOpacity 
                             style={styles.overlayButton} 
                             onPress={handleRestart}
                             activeOpacity={0.7}>
-                            <Text style={styles.overlayButtonText}>다시시도</Text>
+                            <Text style={styles.overlayButtonText} allowFontScaling={false}>다시시도</Text>
                         </TouchableOpacity>
                         
-                        <TouchableOpacity 
-                            style={[styles.overlayButton, styles.overlayButtonSecondary]} 
-                            onPress={continueGame}
-                            activeOpacity={0.7}>
-                            <Text style={[styles.overlayButtonText, styles.overlayButtonTextSecondary]}>계속하기</Text>
-                        </TouchableOpacity>
                     </View>
                 )}
             </View>
@@ -177,15 +171,15 @@ const Game2048 = () => {
             <View style={styles.container}>
                 {/* 상단 헤더 */}
                 <View style={styles.header}>
-                    <Text style={styles.title}>2048</Text>
+                    <Text style={styles.title} allowFontScaling={false}>2048</Text>
                     <View style={styles.scoreContainer}>
                         <View style={styles.scoreBox}>
-                            <Text style={styles.scoreLabel}>점수</Text>
-                            <Text style={styles.scoreValue}>{score}</Text>
+                            <Text style={styles.scoreLabel} allowFontScaling={false}>점수</Text>
+                            <Text style={styles.scoreValue} allowFontScaling={false}>{score}</Text>
                         </View>
                         <View style={styles.scoreBox}>
-                            <Text style={styles.scoreLabel}>최고점</Text>
-                            <Text style={styles.scoreValue}>{bestScore}</Text>
+                            <Text style={styles.scoreLabel} allowFontScaling={false}>최고점</Text>
+                            <Text style={styles.scoreValue} allowFontScaling={false}>{bestScore}</Text>
                         </View>
                     </View>
                 </View>
@@ -193,9 +187,9 @@ const Game2048 = () => {
                 {/* 중앙 게임 영역 */}
                 <View style={styles.gameArea}>
                     <View style={styles.intro}>
-                        <Text style={styles.introText}>스와이프하여 타일을 이동시키세요.{"\n"}같은 숫자의 타일이 만나면 합쳐집니다!</Text>
+                        <Text style={styles.introText} allowFontScaling={false}>스와이프하여 타일을 이동시키세요.{"\n"}같은 숫자의 타일이 만나면 합쳐집니다!</Text>
                         <TouchableOpacity style={styles.button} onPress={handleRestart} activeOpacity={0.7}>
-                            <Text style={styles.buttonText}>새 게임</Text>
+                            <Text style={styles.buttonText} allowFontScaling={false}>새 게임</Text>
                         </TouchableOpacity>
                     </View>
 
@@ -210,11 +204,8 @@ const Game2048 = () => {
                     </View>
 
                     <View style={styles.instructions}>
-                        <Text style={styles.instructionsText}>
-                            방법: 스와이프로 타일을 이동하세요.{"\n"}두 개의 같은 숫자 타일이 만나면 하나로 합쳐집니다!
-                        </Text>
                         <TouchableOpacity style={styles.privacyLink} onPress={openPrivacyPolicy} activeOpacity={0.7}>
-                            <Text style={styles.privacyLinkText}>개인정보처리방침</Text>
+                            <Text style={styles.privacyLinkText} allowFontScaling={false}>개인정보처리방침</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
