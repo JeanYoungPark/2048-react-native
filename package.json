@@ -1,6 +1,6 @@
 {
     "name": "Game2048",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "private": true,
     "scripts": {
         "android": "react-native run-android --port 8082",
@@ -18,7 +18,13 @@
         "doctor": "node scripts/health-check.js",
         "onboard": "node scripts/dev-onboarding.js",
         "dev-setup": "node scripts/dev-onboarding.js",
-        "postinstall": "node scripts/setup-env.js"
+        "postinstall": "node scripts/setup-env.js",
+        "build:aab": "cd android && ./gradlew bundleRelease",
+        "build:apk": "cd android && ./gradlew assembleRelease",
+        "clean": "cd android && ./gradlew clean",
+        "clean:all": "npm run clean && npm start -- --reset-cache && cd android && ./gradlew clean && ./gradlew cleanBuildCache",
+        "release:aab": "npm run clean && cd android && ./gradlew bundleRelease",
+        "release:apk": "npm run clean && cd android && ./gradlew assembleRelease"
     },
     "dependencies": {
         "@react-native-async-storage/async-storage": "^2.2.0",
